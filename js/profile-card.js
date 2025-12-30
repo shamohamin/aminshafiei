@@ -80,7 +80,7 @@ function githubCardTemplate(user) {
 function leetcodeCardTemplate(data) {
   const { totalSolved, totalQuestions, acceptanceRate, ranking } = data;
 
-  const leetUrl = "https://leetcode.com/vinaysomawat/";
+  const leetUrl = "https://leetcode.com/u/user6985f/";
 
   return html`
     <a href="${leetUrl}" target="_blank" class="profile-card">

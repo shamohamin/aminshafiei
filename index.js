@@ -10,14 +10,16 @@ import { html, render } from "https://unpkg.com/lit-html?module";
 
 import { URLs } from "./user-data/urls.js";
 
-const { medium, gitConnected, gitRepo } = URLs;
+const { medium, gitConnected, gitRepo, gitProfileImage } = URLs;
 
-async function fetchBlogsFromMedium(url) {
+async function fetchImagesFromGithub(url) {
   try {
     const response = await fetch(url);
-    const { items, feed } = await response.json();
-    document.getElementById("profile-img").src = feed.image;
-    populateBlogs(items, "blogs");
+    
+    const {avatar_url} = await response.json();
+    document.getElementById("profile-img").src = avatar_url;
+  
+    // populateBlogs(items, "blogs");
   } catch (error) {
     throw new Error(
       `Error in fetching the blogs from Medium profile: ${error}`
@@ -325,7 +327,7 @@ populateBio(bio, "bio");
 
 populateSkills(skills, "skills");
 
-fetchBlogsFromMedium(medium);
+fetchImagesFromGithub(gitProfileImage);
 fetchReposFromGit(gitRepo);
 fetchGitConnectedData(gitConnected);
 

@@ -1,155 +1,182 @@
 const data ={
   "bio": [
-    "Hi, I'm Vinay Somawat — a Frontend Engineer with 5+ years of experience building scalable, high-performance web applications using Angular and React.",
-    "I specialize in component architecture, performance optimization, and modern frontend tooling like Storybook, Stencil, and Module Federation. I actively leverage GitHub Copilot and OpenAI APIs to accelerate UI development, automate workflows, and improve developer productivity.",
-    "I’m passionate about clean code, mentoring, and driving engineering excellence through collaboration, automation, and continuous improvement."
+    "Hi, I'm Mohammadamin(Amin) Shafiei, a systems and network software engineer with a strong focus on Linux kernel development, high-performance networking, and low-latency systems.",
+    "I specialize in eBPF, TCP and kernel networking optimizations, concurrent systems, and performance-critical infrastructure, with experience at Fortinet and in academic research. I enjoy working close to the hardware, solving deep systems problems, and building efficient, scalable software where performance and correctness really matter."
   ],
   "skills": [
+    "C/C++",
+    "Java",
     "JavaScript",
     "TypeScript",
-    "Angular",
-    "AngularJS",
-    "React",
-    "HTML5",
-    "CSS3",
-    "Tailwind CSS",
-    "Material UI",
-    "Bootstrap",
-    "RxJS",
-    "NGXS",
-    "NGRX",
-    "WebSockets",
-    "Module Federation",
-    "Signals API",
-    "Micro-frontend Architecture",
-    "StencilJS",
-    "Storybook",
-    "Webpack",
+    "Python",
+    "Go",
+    "Node.js",
+    "Swift",
+    "Linux",
     "Git",
-    "GitHub Copilot",
-    "OpenAI APIs",
-    "Chrome DevTools",
-    "Performance Optimization",
-    "Responsive Design",
-    "Web Accessibility",
-    "Unit Testing",
-    "ESLint",
-    "Prettier"
+    "Docker",
+    "CMake",
+    "Multithreading",
+    "Encryption",
+    "Bash",
+    "OpenMP",
+    "eBPF",
+    "CI/CD",
+    "Agile Development",
+    "Kubernetes",
+    "OpenCV",
+    "Pandas",
+    "Keras",
+    "TensorFlow",
+    "Wireshark",
+    "tcpdump",
+    "OpenSSL",
+    "CUDA",
+    "SIMD",
+    "Flask",
+    "Express.js",
+    "React",
+    "PostgreSQL",
+    "MySQL",
+    "MongoDB",
+    "Memcached"
   ],
   "experience": [
     {
-      "title": "SS&C Technologies",
-      "duration": "August 2025 - Present",
-      "subtitle": "Senior Software Engineer",
+      "title": "Fortinet",
+      "duration": "2025 - Present",
+      "subtitle": "Intermediate Software Engineer",
       "details": [
-        "coming soon..."
+        "Optimized Certificate Inspection traffic by implementing an eBPF sockmap (SK_SKB hook) redirection that bypasses the userspace proxy after TLS handshake completion, enabling direct kernel-level TCP socket splicing and projecting a 25% improvement in latency and performance.",
+        "Engineered an eBPF-driven connection dispatching strategy using SO_REUSEPORT hook, replacing default kernel distribution with a custom load-balancing logic; reduced tail latency by 10% for high-concurrency, short-lived TCP sessions.",
+        "Built a high-throughput Control Plane service for TLS Deep Inspection, leveraging Unix Domain Sockets (IPC) and a caching layer to handle dynamic server certificate swaps, ensuring low-latency replacement during active sessions in the FortiOS deep inspection workflow."
       ],
-      "tags": [],
+      "tags": ["eBPF", "Certificate", "Https", "TLS", "C", "Async Tasks", "Network Security", "OpenSSL"],
       "icon": "money"
     },
     {
-      "title": "Shiprocket Limited",
-      "duration": "September 2023 - August 2025",
-      "subtitle": "Software Engineer",
+      "title": "University of Waterloo",
+      "duration": "2023 - 2025",
+      "subtitle": "Research Assistant",
       "details": [
-        "Led the migration of 30+ high-traffic modules (serving 300K+ active sellers) from AngularJS to Angular 19, conducting in-depth analysis of legacy code, identifying and addressing functional gaps in updated designs, executing testing across multiple user roles, and delivering a seamless rollout in a live production environment.",
-        "Engineered a ChatGPT-style courier rule engine using OpenAPI schema, automating 20+ ops tasks; built global search with deep linking and keyboard shortcuts, boosting efficiency by 30%",
-        "Contributed to the Shiprocket UI Design System using StencilJS + Storybook with atomic design, cutting UI bugs by 35% and halving feature delivery time across teams.",
-        "Integrated GitHub Copilot and ChatGPT into dev workflows, accelerating code generation and debugging; enforced linting pratices and mentored 5+ engineers in modern Angular."
+        "Working as Graduate Research Assistant under the supervision of Prof. Martin Karsten, in the Systems and Network.",
+        "Collaborated on the development and testing of a new IRQ suspension mechanism for the Linux kernel, achieving a 30% performance gain by optimizing CPU usage and network efficiency during varying traffic loads.",
+        "Contributed to the interrupt subsystem by developing and testing an IRQ suspension mechanism to optimize network stack (TCP) latency as part of my research thesis."
       ],
       "tags": [
-        "TypeScript",
-        "Storybook",
-        "GitHub Copilot"
+        "Linux",
+        "Epoll",
+        "Interrupts",
+        "SoftIRQ",
+        "C",
+        "Async IO"
       ],
       "icon": "truck"
     },
     {
-      "title": "Biofourmis India Pvt. Ltd.",
-      "duration": "April 2022 - July 2023",
-      "subtitle": "Software Engineer",
+      "title": "Synamedia",
+      "duration": "2024 - 2024",
+      "subtitle": "Software Engineer (Intern)",
       "details": [
-        "Spearheaded micro-frontend adoption with Module Federation, eliminating shared deployment blockers and enabling team- wise independent releases.",
-        "Architected multi-region deployment support with dynamic API routing and failover, improving global latency.",
-        "Integrated real-time collaboration tools (Twilio Video, Countly, NGXS WebSockets) to enable 24/7 patient monitoring and synchronous team interactions."
+        "Developed a high-performance C++ VVC decoder, achieving a 4x speedup via multi-threaded slice-level parallelism; optimized cache locality and memory access patterns to double performance on NUMA architectures.",
+        "DevelopedaTPM2.0driverinCfortheIKGTbare-metalhypervisor,implementingtheTPMInterfaceSpecification(TIS)toenable hardware-backed cryptographic operations, including HMAC session handling, policy-based authentication, and state-based data encryption."
       ],
       "tags": [
-        "TypeScript",
-        "RxJS",
-        "NGXS",
-        "WebSockets",
-        "Module Federation"
+        "IKGT Hypervisor",
+        "TPM",
+        "OpenSSL",
+        "Video Encoding",
+        "H266 (VCC)",
+        "Multi-threaded Programming"
       ],
       "icon": "heartbeat"
     },
     {
-      "title": "Novopay Solutions Pvt. Ltd.",
-      "duration": "July 2020 - April 2022",
+      "title": "Rahbin Sanat Nasir",
+      "duration": "2021 - 2022",
       "subtitle": "Software Engineer",
       "details": [
-        "Built Aadhaar-enabled banking modules (eKYC, withdrawal, balance inquiry) for 100K+ retail agents, ensuring secure financial access in rural areas.",
-        "Designed QR-code wallet flow, reducing transaction failures and increasing user adoption across merchants.",
-        "Integrated Clevertap, Freshdesk, and chatbot support, cutting average support resolution time by 40%."
+        "Developed a highly efficient pipelined Android app in Native JAVA for real-time streaming camera frames using RTP.",
+        "Developed a multithreaded C++ App with the Qt framework to process and filter frames from the Android app over a local network.",
+        "Enhanced the filtering process by 25% using the SIMD library, outperforming single-threaded code."
       ],
       "tags": [
-        "JavaScript",
-        "Angular",
-        "Bootstrap"
+        "SIMD",
+        "Multi-threading programming",
+        "QT",
+        "CPP",
+        "Realtime streaming"
+      ],
+      "icon": "qrcode"
+    },
+    {
+      "title": "K. N. Toosi university of Technology",
+      "duration": "2020 - 2021",
+      "subtitle": "Software Engineer",
+      "details": [
+        "Developed an IOS app for an indoor navigation system using ARKit Framework in Swift.",
+        "Boosted node positioning speed by 3x using background threading, reducing latency and improving rendering efficiency.",
+        "Achieved a 5x improvement in overall system performance by leveraging priority job dispatch queues."
+      ],
+      "tags": [
+        "Multi-threading programming",
+        "IOS",
+        "Realtime streaming",
+        "Async Task",
+        "Swift"
       ],
       "icon": "qrcode"
     }
   ],
   "education": [
     {
-      "title": "B.Tech. in Computer Science and Engineering",
-      "duration": "2016 - 2020",
-      "subtitle": "National Institute of Technology, Warangal",
-      "details": [],
+      "title": "Full time Master Student in Computer Science (Systems & Network)",
+      "duration": "2023 - 2025",
+      "subtitle": "University of Waterloo ",
+      "details": [
+        "GPA 91/100",
+        "International Master's Award of Excellence Scholarship"
+      ],
       "tags": [],
       "icon": "graduation-cap"
     },
     {
-      "title": "Class 12th in Science and Mathematics",
-      "duration": "",
-      "subtitle": "Board of Secondary Education, Rajasthan",
-      "details": [],
+      "title": " Bachelor of Science in Computer Engineering",
+      "duration": "2018 - 2022",
+      "subtitle": "K. N. Toosi University of Technology",
+      "details": [
+        "GPA 18.86/20",
+        "Ranked 3rd in class of 82",
+        "Dean's list"
+      ],
       "tags": [],
-      "icon": "book"
+      "icon": "graduation-cap"
     }
   ],
   "contactLinks": [
     {
       "label": "Email",
-      "link": "mailto:vinaysomawat40@gmail.com",
+      "link": "mailto:shafiee.mohamin@gmail.com",
       "icon": "fa fa-envelope"
     },
     {
       "label": "LinkedIn",
-      "link": "https://www.linkedin.com/in/vinaysomawat/",
+      "link": "https://www.linkedin.com/in/aminshafiei/",
       "icon": "fa-brands fa-linkedin"
     },
     {
       "label": "GitHub",
-      "link": "https://github.com/vinaysomawat",
+      "link": "https://github.com/shamohamin",
       "icon": "fa-brands fa-github"
     },
-    {
-      "label": "Buy me a coffee",
-      "link": "https://www.buymeacoffee.com/r194dME8y",
-      "icon": "fa fa-coffee"
-    }
   ],
   "footer": [
     {
       "label": "Links",
       "data": [
         {
-          "text": "Buy me a coffee",
-          "link": "https://www.buymeacoffee.com/r194dME8y"
-        },
-        {
           "text": "Github",
-          "link": "https://github.com/vinaysomawat/vinaysomawat.github.io"
+          "link": "https://github.com/shamohamin/aminshafiei"
         }
       ]
     },
@@ -160,10 +187,6 @@ const data ={
           "text": "Trekking & Himalayan Pass Adventures",
           "link": "./pages/adventure.html"
         },
-        {
-          "text": "Generate JSON data",
-          "link": "./pages/json-generator.html"
-        }
       ]
     },
     {
