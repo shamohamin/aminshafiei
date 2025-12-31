@@ -8,7 +8,7 @@ const gitProfileImage = (githubUsername) => `https://api.github.com/users/${gith
 
 export const URLs = {
     // medium: createMediumURL(mediumUsername),
-    gitConnected: createGitConnectedURL(githubUsername),
+    // gitConnected: createGitConnectedURL(githubUsername),
     gitRepo: gitRepos(githubUsername),
     gitProfileImage: gitProfileImage(githubUsername)
 };

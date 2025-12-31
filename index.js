@@ -11,7 +11,7 @@ import { html, render } from "https://unpkg.com/lit-html?module";
 
 import { URLs } from "./user-data/urls.js";
 
-const { medium, gitConnected, gitRepo, gitProfileImage } = URLs;
+const { gitRepo, gitProfileImage } = URLs;
 
 async function fetchImagesFromGithub(url) {
   try {
@@ -330,7 +330,7 @@ populateSkills(skills, "skills");
 
 fetchImagesFromGithub(gitProfileImage);
 fetchReposFromGit(gitRepo);
-fetchGitConnectedData(gitConnected);
+// fetchGitConnectedData(gitConnected);
 
 populateExp_Edu(experience, "experience");
 populateExp_Edu(education, "education");
