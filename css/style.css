@@ -1277,6 +1277,47 @@ strong {
   color: #666;
 }
 
+.blog-content {
+  padding-bottom: 15px;
+}
+
+.blog-content div {
+  padding-bottom: 10px;
+}
+
+.blog-content div:last-of-type {
+  padding-bottom: 0px;
+}
+
+.blog-content .code-content {
+  margin: 20px 0;
+  /* padding: 10px 10px; */
+  
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  /* Style */
+  background-color: #1e1e1e; /* VS Code style dark */
+  color: #d4d4d4;
+  border-left: 4px solid #f9bf3f; /* Keep your yellow as an accent */
+  border-radius: 8px;
+  
+  /* Typography */
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 1.5rem;
+  line-height: 1.5;
+  
+  /* Behavior */
+  overflow-x: auto; /* Adds horizontal scroll for long lines */
+  white-space: pre;
+}
+
+.span-bold {
+  font-weight: 700;
+  color: #f9bf3f;
+  letter-spacing: -0.01em; /* Tightens text for a premium feel */ 
+}
+
 .trek-height .badge {
   background-color: #f9bf3f;
   color: #000;

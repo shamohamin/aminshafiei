@@ -153,6 +153,15 @@ const data ={
       "icon": "graduation-cap"
     }
   ],
+  "blogs": [
+    {
+      "link": "./pages/blogs/sk-skb.html",
+      "title": "Turning your proxy into a more efficient and performant one!",
+      "content": "lorem",
+      "categories": ["eBPF", "Network Security", "Network Performance", "Packet Processing"],
+      "pubDate": "2025-12-30 18:30"
+    }
+  ],
   "contactLinks": [
     {
       "label": "Email",
@@ -209,3 +218,5 @@ export const education = data.education
 export const contactLinks = data.contactLinks
 
 export const footer = data.footer;
+
+export const blogCards = data.blogs;

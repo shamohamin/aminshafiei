@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>SK-SKB eBPF hook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Mohammadamin Shafiei is a systems and network software engineer specializing in Linux kernel, eBPF, high-performance networking, and low-latency infrastructure." />
+    <meta
+      name="keywords"
+      content="portfolio,website,personal website,github,projects,computer science and engineering"
+    />
+    <meta name="author" content="Mohammadamin Shafiei" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="icon" type="image/png" href="../logo.png" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans|Raleway&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../../css/animate.css" />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+    />
+
+    <script src="../js/modernizr-2.6.2.min.js"></script>
+    <script type="module" src="../../index.js"></script>
+    <script type="module" src="../../js/main.js"></script>
+  </head>
+  <body style="padding: 0 20px">
+    <div class="home-link-wrapper">
+      <a href="../../index.html" class="home-link">
+        <i class="fa-solid fa-arrow-left"></i> Home
+      </a>
+    </div>
+    <section class="colorlib-skills" data-section="trekking">
+      <div class="colorlib-narrow-content">
+        <div
+          class="row row-bottom-padded-sm animate-box"
+          data-animate-effect="fadeInLeft"
+        >
+          <div class="about-desc text-center">
+            <h1>
+              SK-SKB
+              <span style="color: #f9bf3f">eBPF</span>
+              hook
+            </h1>
+            <p>
+              A hook that allows you to bypass the user-space dynamically for connecting two seperate sockets
+            </p>
+          </div>
+          <div style="padding-top: 15px;" class="blog-content">
+            <h2>Miscellaneous Content</h2>
+            <div>
+                <div>
+                    Before I start to talk about technical terms, first I wanted to share the state I am in when writing this post about eBPF. 
+                    I am pretty sure most of the people do not care and will bypass this section but still I guess its important for me to share couple of lines first. 
+                    I read most of the blogs and I believe most of them lack the engaging part, the intention, I just want to implement a different version (I am not saying I invented it I am mere using it) in writing blogs which is both fun and it might help you to learn something.
+                </div>
+                <div>
+                    I recently started the climbing (specifically bouldering). It's a tough exercise and requires lots of upper body stenght. 
+                    I am writing this blog after a 90 minutes of bouldering. Yes, my forarms are killing me and Fell multiple times but still once I got home I was excited to write this blog. 
+                    Do not ask me why!! you might think this guy is crazy should watch a movie rest or do something else but he is writing instead. 
+                    I must say you are absolutely right. However, my brain does not work like that. When I am tired whether its after a rough mountain biking, gym, or bouldering session, It is in its' super creative position.
+                    This is the critial time that I get my brilliant ideas and start to working on them.
+                </div>
+                <div> I guess Having said all of these I guess its time to get into the eBPF.</div>
+            </div>
+          </div>
+
+            <div style="padding-top: 15px;" class="blog-content">
+                <h2>eBPF</h2>
+                <div>
+                    I am not going to start from scratch and tell you what eBPF stands for and what it can do. 
+                    It would be a good practice for you to read about <a href="https://ebpf.io/">eBPF</a>, but in simple words this is just a small virtual machine inside Linux kernel,
+                    that allows you to run custom programs in the kernel space.
+                </div>
+                <div>
+                    You might say why this is important??? it is important because chaning the kernel source code is not needed. 
+                    Basically, with eBPF you write a program at the runtime then inject it into the kernel space and eBPF virtual machine will run the program for you. 
+                    Whereas if this was not the case whenever you wanted to add a simple program lets just say a monitoring tool to see how many times a function (e.g, syscall function) gets called you needed to add the counter inside the function then recompile the kernel, .....
+                    so you needed to go through hell before actually to start monitor a function, and you would have wasted 10 minutes of your life only just by compiling the kernel :))
+                </div>
+                <div>
+                With eBPF (specifically ebpf tools such as bpftrace, ....) these days only with a simple AI query you can monitor a syscall in less than one minute. 
+                I just asked Gemini to give me a bpftrace to count the number of times a system-call was invoked: 
+
+                <div class="code-content">
+    sudo bpftrace -e 'tracepoint:syscalls:sys_enter_read { @count = count(); }'
+                </div>
+                </div>
+                <div>
+                    So it seems that this eBPF thingy is super beneficial, easy to use, and practical. One thing that is super important to us is that it has specific hooks in the kernel for packet processing.
+                    Although you can use it for monitoring, the most important part of its usage is packet processing. It allows you to process packets in different points in the kernel network stack. 
+                    These packet hooks start with <span class="span-bold">XDP</span> which basically runs on the NIC or driver (based on NIC's support of <span class="span-bold">XDP</span>), this hook is also known as L2 layer. 
+                    After that hook we reach the <span class="span-bold">TC</span> layer that runs before <span class="span-bold">Netfilter</span> in the kernel and is called L4 (IP/TCP) layer. It is one of the most powerful hooks, it allows you to bypass the <span class="span-bold">Netfilter</span> completely, do <span class="span-bold">DNAT/SNAT</span> and change a packet's metadata, its like a gold mine.
+                    After these layers we have other hooks that run before user-space on the socket layer (L7 layer in some sense), basically when network stack wants to transfer a packet to user-space first these hooks are being called. 
+                    Today we are going to talk about these hooks specifically, L7 layer hooks and how they can actully allow us to enhance the traffic redirection in a L7 Proxy.
+                </div>
+            </div>
+
+            <div style="padding-top: 15px;" class="blog-content">
+                <h2>L7 Proxy</h2>
+                <div>
+                    You are probably asking yourself this question, what is this dude is saying. What is an L7 Proxy?? 
+                    In real word, many of companies they have exposed servers that they function as a loadbalancer or I do not know something else.
+                    The role of these servers is to based on some policies for instance matching the SNI, IP address, port, protocol, and etc, to redirect the traffic to an actual server.
+                    This is called L7 proxy simply. Why L7 not L4 because it sits in the user-space instead of kernel-space. So I am restrictively talking about a proxy that sits in the userspace and monitors the traffic. 
+                    Or the other function of an L7 proxy is to see if the traffic that is traversing this proxy machine is malicious. As result, traffic needs to go to userspace to be monitored or to be matched with one of these policies.
+                </div>
+                <div>
+                    If I wanna give you a simple analogy you can think of the proxy as a postman that can read the letters. lets say the postman name is good old man BOB.
+                    Everytime you wanna visit a website you must go to the post office and hand over your request to him. He watches the letter and does every neccessary steps to see if you are a good person. 
+                    Then he decides to send your letter to the website you requested. As you see everything goes through BOB before reaching the actual server. 
+                    However, most of the times BOB knows you and trust you because you gave him a cookie, and he is happy with that 😄. Therefore, you do not need to give the letter to him. You basically can put it on the send pile then go home. 
+                    You see you are not bothering the BOB with more work, the letter is on the send pile and it will be delivered. So keep this last part in you mind we are going back to this (right now I am feeling like a director that does flashbacks 🤣). 
+                </div>
+                <div>
+                    So one major problem with these L7 proxies is that once a traffic reaches the user-space you cannot tell the kernel to redirect the traffic for you.
+                    The user-space now is responsible to read the traffic from one socket and redirecting it another socket (the server side). 
+                    In real world scenarios we encounter these kind of traffic very much. Lets say we have a proxy that does certificate inspections. 
+                    This means that the Proxy does the <span class="span-bold">TLS</span> handshake with client and makes another connection with the requested website. 
+                    After it checks the certificates, if everything is good it starts transferring the traffic from one socket to another one. 
+                </div>
+                <div>
+                    You see this is a performance bottelneck, you might ask yourself why?? user-space is basically does nothing after the certificate inspection. 
+                    Merely, gets the packet from one side and transfer it to another one. But traffic needs to be redirected to user-space, meaning we are paying the cost of context switch, waking up, and in some cases the user/kernel copy (for instance if IO_URING is being used this cost is mitigated!).
+                    This is where eBPF can help you to overcome the problem.
+                </div>
+            </div>
+
+            <div style="padding-top: 15px;" class="blog-content">
+                <h2>SK-SKB eBPF hook</h2>
+                <div>
+                </div>
+                <div>
+                </div>
+                <div>
+                    
+                </div>
+                <div>
+                </div>
+            </div>
+             
+        </div>
+      </div>
+      
+    </section>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery.waypoints.min.js"></script>
+  </body>
+</html>

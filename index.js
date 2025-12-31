@@ -2,6 +2,7 @@ import {
   bio,
   skills,
   education,
+  blogCards,
   experience,
   footer,
   contactLinks,
@@ -333,6 +334,7 @@ fetchGitConnectedData(gitConnected);
 
 populateExp_Edu(experience, "experience");
 populateExp_Edu(education, "education");
+populateBlogs(blogCards, "blogs");
 
 populateLinks(footer, "footer");
 populateContactLinks(contactLinks, 'contact-links');
