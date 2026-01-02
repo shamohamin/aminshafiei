@@ -334,7 +334,14 @@ fetchReposFromGit(gitRepo);
 
 populateExp_Edu(experience, "experience");
 populateExp_Edu(education, "education");
-populateBlogs(blogCards, "blogs");
+
+const projectdesign = document.getElementById(id);
+if (!projectdesign) {
+    console.warn(`Element with id "${id}" not found. Retrying...`);
+    setTimeout(() => populateBlogs(items, id), 100); 
+} else {
+  populateBlogs(blogCards, "blogs");
+}
 
 populateLinks(footer, "footer");
 populateContactLinks(contactLinks, 'contact-links');

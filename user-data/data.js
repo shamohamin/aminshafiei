@@ -157,7 +157,7 @@ const data ={
     {
       "link": "./pages/blogs/sk-skb.html",
       "title": "Turning your proxy into a more efficient and performant one!",
-      "content": "lorem",
+      "content": "A deep dive into eBPF SK-SKB: what it can achieve and how it helps to enhance the performance of traffic redirection, specifically for L7 Proxies.",
       "categories": ["eBPF", "Network Security", "Network Performance", "Packet Processing"],
       "pubDate": "2025-12-30 18:30"
     }
