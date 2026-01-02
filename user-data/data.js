@@ -189,15 +189,15 @@ const data ={
         }
       ]
     },
-    {
-      "label": "Pages",
-      "data": [
-        {
-          "text": "Trekking & Himalayan Pass Adventures",
-          "link": "./pages/adventure.html"
-        },
-      ]
-    },
+    // {
+      // "label": "Pages",
+      // "data": [
+      //   {
+      //     // "text": "Trekking & Himalayan Pass Adventures",
+      //     // "link": "./pages/adventure.html"
+      //   },
+      // ]
+    // },
     {
       "label": "copyright-text",
       "data": [
