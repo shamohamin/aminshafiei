@@ -63,7 +63,7 @@
                 <div>
                     Before I start to talk about technical terms, first I wanted to share the state I am in when writing this post about eBPF. 
                     I am pretty sure most of the people do not care and will bypass this section but still I guess its important for me to share couple of lines first. 
-                    I read most of the blogs and I believe most of them lack the engaging part, the intention, I just want to implement a different version (I am not saying I invented it I am mere using it) in writing blogs which is both fun and it might help you to learn something.
+                    I read most of the blogs and I believe most of them lack the engaging part, the intention, I just want to implement a different version (I am not saying I invented it I am merely using it) in writing blogs which is both fun and it might help you to learn something.
                 </div>
                 <div>
                     I recently started the climbing (specifically bouldering). It's a tough exercise and requires lots of upper body stenght. 
@@ -140,16 +140,77 @@
             <div style="padding-top: 15px;" class="blog-content">
                 <h2>SK-SKB eBPF hook</h2>
                 <div>
+                    So far you might have guessed what I am going to put in this section. If not it is also okay, I needed to write it anyway :)
+                    Previous section showed that when a traffic reaches the user-space, kernel basically tells the application (user-space)
+                    you are responsible for this traffic starting from now. As a result, even if a traffic needs to be redirected to an actual website, 
+                    user-space needs to read from one socket (the client side) and redirect it to the second one (server side).
                 </div>
                 <div>
+                    But what if there was a way that tell the kernel please redirect the traffic for us in the kernel. 
+                    This way user-space is taken out of the equations, resulting in no context-switch, application wake up, and copying. 
+                    It turned out that eBPF can give you this piece. But before getting into the eBPF first lets see the traditional methods of doing this. 
                 </div>
                 <div>
-                    
+                    One way that this was possible was through using <span class="span-bold">splice</span> syscall. On simple words 
+                    this syscall takes two file descriptor (fds) and transfer the data from the source one to the destination one. 
+                    However, this still needs the user-space interaction. By that I mean user-space waits for an event (using EPOLL or IO_URING)
+                    then calls the <span class="span-bold">splice</span> this will transfer data in the kernel without user-space intervension.
                 </div>
                 <div>
+                    <span class="span-bold">splice</span> is a good way to achieve traffic redirection. Ironically for doing this for TCP sockets is called TCP splicing. 
+                    Just look how famous this syscall is! However, this method still needs the user-space interaction. On the other hand, eBPF does this job much cleaner. 
+                    By using <span class="span-old">SK_SKB</span> hook eBPF watchs the fds that you are interested to redirect data from. 
+                    Okay here is a little bit technical but I gurantee I will explain it in a good way. 
+                </div>
+                <div>
+                    Now I wanna talk about the SK_SKB transfer method. So imagine you have two TCP sockets with the first TCP socket fd 1 and second one fd 2.
+                    You wanna transfer the data from socket 1 to socket 2. For this you need to add the fds to an eBPF <span class="span-bold">SOCKMAP</span>. 
+                    This <span class="span-bold">SOCKMAP</span> is an hashmap (as simple as that). 
+                    When a message comes on the recieve queue of the first socket (fd 1), the eBPF program will be executed for that message. 
+                    The reason that eBPF program will be executed is that you added the fd to the <span class="span-bold">SOCKMAP</span> so kernel knows that 
+                    for every message on that socket the eBPF program needs to be executed. In that eBPF program we can decide where this message should be sent.
+                    Et voilà!! magic, the traffic can be redirected completely in the kernel side.
+                    Remeber that I told you I will come back to the postal office analogy. 
+                    Lets just assume that BOB has an assistance, once BOB decides that letters from a specific sender are safe, 
+                    he tells the assistant that do not send those letters to me anymore, put it directly on the send pile.
+                    This assistant is the eBPF program.
+                    <div>
+                        I guess SK_SKB is mostly implemented to redirect the traffic of TCP. However, UDP sockets in some cases are allowed, you need to call the <span class="span-bold">connect</span> syscall on the incoming traffic.
+                        However, I like to invite you to think about <span class="span-bold">QUIC</span> or more specifically <span class="span-bold">UDP</span> traffic.
+                        These kinds of traffics are basically stateless because of the UDP and they mostly contain small packets, redirecting them as soon as possible just gonna save millions of CPU cycles and would be more energy efficient, keeps our planet safe.
+                        So comming up with a <span class="span-bold">XDP</span> or <span class="span-bold">TC</span> hook to redirect these kinds of traffic you are basically not only helping your company to profit you are saving the planet!
+                    </div>
+                </div>
+                <div>
+                    Just to be clear this hook is not that great on the kernel v4.14 (this is when the hook was implemented). 
+                    However, these days it has been refined and deliveres a good performance. So I would suggest to use it with more recent kernels specifically v6 and over.
+                    You can read kernel mailing list to see what kind of optimizations it went through I will put a link below.
+                </div>
+                <div>
+                    I will not add the code for this in this blog but soon I will post it on my github and put the link here.
+                    So stay tuned.
                 </div>
             </div>
-             
+            
+            
+            <div style="padding-top: 15px;" class="blog-content">
+                <h2>Final Thoughts</h2>
+                <div>
+                    How I came to know this hook? As you know, currently I am a software engineer at Fortinet. 
+                    I saw that when a traffic hits the user-space and does not need to be (deeply) inspected (like ssl-inspection), the redirection happens in the userspace. 
+                    I told myself there is definitely a way to redirect the traffic in the kernel. I searched, searched until I found this hook.
+                    So please never trust the system you are working on, there are definitely ways to improve it. 
+                    Do not be just a simple Software Engineer that follows the rule, be creative and try to be different.
+                </div> 
+            </div>
+            
+            <div style="padding-top: 15px;" class="blog-content">
+                <h2>Resources</h2>
+                <div><a href="https://docs.ebpf.io/linux/program-type/BPF_PROG_TYPE_SK_SKB/">SK_SKB page</a></div> 
+                <div> <a href="https://blog.cloudflare.com/sockmap-tcp-splicing-of-the-future/">SK_SKB cloudflair</a> </div>
+                <div><a href="https://bpfconf.ebpf.io/bpfconf2025/bpfconf2025_material/Optimizing%20sk_msg%20for%20Socket%20Map.pdf">SK_SKB performance over new kernel</a></div>
+                <div><a href="https://blog.cloudflare.com/everything-you-ever-wanted-to-know-about-udp-sockets-but-were-afraid-to-ask-part-1/">UDP SOCKETS</a></div>
+            </div>
         </div>
       </div>
       
