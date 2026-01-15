@@ -335,10 +335,10 @@ fetchReposFromGit(gitRepo);
 populateExp_Edu(experience, "experience");
 populateExp_Edu(education, "education");
 
-const projectdesign = document.getElementById(id);
+const projectdesign = document.getElementById("blogs");
 if (!projectdesign) {
-    console.warn(`Element with id "${id}" not found. Retrying...`);
-    setTimeout(() => populateBlogs(items, id), 100); 
+    console.warn(`Element with id blogs not found. Retrying...`);
+    setTimeout(() => populateBlogs(items, "blogs"), 100);
 } else {
   populateBlogs(blogCards, "blogs");
 }
