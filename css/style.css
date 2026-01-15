@@ -394,7 +394,7 @@ body.offcanvas .colorlib-nav-toggle {
   }
 
   .colorlib-blogs {
-    display: none;
+    /* display: none; */
   }
 
   .profile-cards {
